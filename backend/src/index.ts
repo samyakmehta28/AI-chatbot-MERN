@@ -4,11 +4,18 @@ import { connectDB } from './db/connection.js';
 import morgan from 'morgan';
 import appRouter from './routes/index.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 config();
 const app = express();
 const port = 3000;
 
 //middlewares
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // allow only this origin
+    credentials: true, // allow credentials
+  })
+);
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 

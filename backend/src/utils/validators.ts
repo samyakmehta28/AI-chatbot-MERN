@@ -9,7 +9,7 @@ export const validate = (validations: ValidationChain[]) => {
       return next();
     }
     const extractedErrors = anyErrors.array();
-    return res.status(422).json({ errors: extractedErrors });
+    return res.status(422).json({ errors: extractedErrors?.[0]?.msg });
   };
 };
 

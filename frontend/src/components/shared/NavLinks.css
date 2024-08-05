@@ -1,0 +1,18 @@
+.button-link {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: #05101c;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.button-link:hover {
+  background-color: darkblue;
+}

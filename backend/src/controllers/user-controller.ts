@@ -38,7 +38,9 @@ export const userSignup = async (req: Request, res: Response) => {
       signed: true,
       expires,
     });
-    return res.status(201).json({ message: 'OK', id: user._id.toString() });
+    return res
+      .status(201)
+      .json({ message: 'OK', name: getUser.name, email: getUser.email });
   } catch (error) {
     //console.log(error);
     return res.status(404).json({ message: 'Error', error: error.message });
@@ -75,9 +77,25 @@ export const userLogin = async (req: Request, res: Response) => {
       signed: true,
       expires,
     });
-    return res.status(200).json({ message: 'OK', id: getUser._id.toString() });
+    return res
+      .status(200)
+      .json({ message: 'OK', name: getUser.name, email: getUser.email });
   } catch (error) {
     // console.log(error);
+    return res.status(404).json({ message: 'Error', error: error.message });
+  }
+};
+
+export const userLogout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie('auth_token', {
+      httpOnly: true,
+      signed: true,
+      domain: 'localhost',
+      path: '/',
+    });
+    return res.status(200).json({ message: 'User successfully logged out' });
+  } catch (error) {
     return res.status(404).json({ message: 'Error', error: error.message });
   }
 };
