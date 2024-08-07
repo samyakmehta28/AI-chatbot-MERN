@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
       } catch (error) {
         // console.log('Logging it here', error);
+        // alert('Please login or signup');
       }
     }
     checkAuth();

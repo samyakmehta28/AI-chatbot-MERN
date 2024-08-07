@@ -44,3 +44,30 @@ export const verifyToken = async (
     }
   }
 };
+
+export const authenticateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = await req.signedCookies.auth_token;
+  if (!token || token.trim() === '') {
+    return res.status(401).json({ message: 'Please login or signup' });
+  } else {
+    try {
+      const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
+      // console.log(decoded.email);
+      const getUser = await User.findOne({ email: decoded.email });
+      if (!getUser) {
+        return res.status(401).json({
+          message: 'User not found or deleted, please login in or sign up',
+        });
+      }
+      req.body = { ...req.body, email: decoded.email };
+      next();
+    } catch (error) {
+      console.log(error);
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+  }
+};
