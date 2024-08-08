@@ -19,6 +19,12 @@
   border-bottom-left-radius: 20px;
 }
 
+@media (max-width: 600px) {
+  .chat-info {
+    display: none;
+  }
+}
+
 .chat-box {
   flex: 3;
   display: flex;
@@ -49,6 +55,12 @@
   background-color: transparent;
   text-align: center;
   width: 80%;
+}
+
+@media (max-height: 300px) {
+  .chat-instruction {
+    display: none;
+  }
 }
 
 .chat-clear {

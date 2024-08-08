@@ -37,8 +37,46 @@ export const generateResponse = async (
     user.chats.push({ role: 'user', content: message });
     user.chats.push(response);
     await user.save();
-    return res.status(200).json({ message: 'OK', data: user.chats });
+    return res.status(200).json({ message: 'OK', chats: user.chats });
   } catch (error) {
     return res.status(500).json({ message: 'Open AI internal Server Error' });
   }
+};
+
+export const getMessageHistory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email } = req.body;
+  let user: any = null;
+  try {
+    user = await User.findOne({ email });
+  } catch (error) {
+    return res.status(500).json({ message: 'Database: Internal Server Error' });
+  }
+  if (!user) {
+    return res.status(401).json({ message: 'Please login or session expired' });
+  }
+  return res.status(200).json({ message: 'OK', chats: user.chats });
+};
+
+export const clearChatHistory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email } = req.body;
+  let user: any = null;
+  try {
+    user = await User.findOne({ email });
+  } catch (error) {
+    return res.status(500).json({ message: 'Database: Internal Server Error' });
+  }
+  if (!user) {
+    return res.status(401).json({ message: 'Please login or session expired' });
+  }
+  user.chats = [];
+  await user.save();
+  return res.status(200).json({ message: 'OK', chats: user.chats });
 };
