@@ -1,11 +1,13 @@
 import './Chat.css';
 import { UseAuthContext } from '../context/auth-context';
 import { useEffect, useState } from 'react';
+import { useNavigate, Navigate } from 'react-router-dom';
 import {
   sendMessage,
   getMessageHistory,
   clearChatHistory,
 } from '../helper/api-communicator';
+import ChatItem from '../components/ChatItem';
 
 type message = {
   content: string;
@@ -15,6 +17,15 @@ type message = {
 const Chat = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [chatList, setChatList] = useState<[message] | []>([]);
+  const auth = UseAuthContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth?.isLoggedIn) {
+      console.log(auth?.isLoggedIn);
+      navigate('/login');
+    }
+  }, [auth]);
 
   useEffect(() => {
     const fetchMessagesHistory = async () => {
@@ -52,7 +63,6 @@ const Chat = () => {
     setInputMessage('');
   };
 
-  const auth = UseAuthContext();
   return (
     <div className="chat-container">
       <div className="chat-info">
@@ -76,7 +86,7 @@ const Chat = () => {
         <div className="chat-messages">
           {chatList.map((message, index) => (
             <div key={index} className={`chat-message ${message.role}`}>
-              <p>{message.content}</p>
+              <ChatItem message={message.content} />
             </div>
           ))}
         </div>

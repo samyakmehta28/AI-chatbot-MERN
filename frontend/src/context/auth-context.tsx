@@ -20,6 +20,7 @@ const AuthContext = createContext<UserAuth | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     //fetch if user cookies are valid then skip login page
@@ -34,6 +35,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } catch (error) {
         // console.log('Logging it here', error);
         // alert('Please login or signup');
+      } finally {
+        setIsLoading(false);
       }
     }
     checkAuth();
@@ -59,7 +62,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <p>Loading</p>
+  ) : (
     <AuthContext.Provider value={{ isLoggedIn, user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>

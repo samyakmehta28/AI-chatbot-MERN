@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UseAuthContext } from '../context/auth-context';
@@ -9,6 +9,13 @@ const Login = () => {
   // but form data makes it easier to get the values of the inputs
   const auth = UseAuthContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth?.isLoggedIn) {
+      navigate('/chat');
+    }
+  }, [auth?.isLoggedIn]);
+
   const [errorMsg, setErrorMsg] = React.useState('');
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
