@@ -18,12 +18,12 @@ export const verifyToken = async (
 ) => {
   const token = await req.signedCookies.auth_token;
   if (!token || token.trim() === '') {
-    const { email, password } = req.body;
-    if (email === '' && password === '') {
-      return res
-        .status(401)
-        .json({ message: 'Please enter email and password' });
-    }
+    // const { email, password } = req.body;
+    // if (email === '' && password === '') {
+    //   return res
+    //     .status(401)
+    //     .json({ message: 'Please enter email and password' });
+    // }
     next();
   } else {
     try {
@@ -32,7 +32,8 @@ export const verifyToken = async (
       const getUser = await User.findOne({ email: decoded.email });
       if (!getUser) {
         return res.status(401).json({
-          message: 'User not found or deleted, please login in or sign up',
+          message:
+            'User not found or deleted, please login in or sign up or clear cookies',
         });
       }
       return res

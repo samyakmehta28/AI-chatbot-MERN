@@ -17,6 +17,18 @@ export const logoutUser = async () => {
   return res.data;
 };
 
+export const signupUser = async (
+  name: string,
+  email: string,
+  password: string
+) => {
+  const res = await axios.post('/user/signup', { name, email, password });
+  if (res.status !== 201) {
+    throw new Error('Error in signup');
+  }
+  return res.data;
+};
+
 export const sendMessage = async (message: string) => {
   const res = await axios.post('/chats/new', { message });
   if (res.status !== 200) {

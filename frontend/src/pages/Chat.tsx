@@ -22,7 +22,6 @@ const Chat = () => {
 
   useEffect(() => {
     if (!auth?.isLoggedIn) {
-      console.log(auth?.isLoggedIn);
       navigate('/login');
     }
   }, [auth]);

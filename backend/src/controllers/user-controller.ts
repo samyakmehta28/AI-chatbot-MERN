@@ -40,7 +40,7 @@ export const userSignup = async (req: Request, res: Response) => {
     });
     return res
       .status(201)
-      .json({ message: 'OK', name: getUser.name, email: getUser.email });
+      .json({ message: 'OK', name: user.name, email: user.email });
   } catch (error) {
     //console.log(error);
     return res.status(404).json({ message: 'Error', error: error.message });

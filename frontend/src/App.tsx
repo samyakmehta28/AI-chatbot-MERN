@@ -1,9 +1,11 @@
 import Header from './components/Header';
 import { Routes, Route } from 'react-router-dom';
 import { Home, Login, Signup, Chat, NotFound } from './pages';
+import ProtectedRoute from './components/ProtectedRoute';
+import { UseAuthContext } from './context/auth-context';
 
 function App() {
-  // console.log(UseAuthContext()?.isLoggedIn);
+  const auth = UseAuthContext();
   return (
     <>
       <main>
@@ -13,7 +15,15 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/chat" element={<Chat />} />
+            <Route
+              path="/chat"
+              element={
+                <ProtectedRoute
+                  component={Chat}
+                  isLoggedIn={auth?.isLoggedIn}
+                />
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
