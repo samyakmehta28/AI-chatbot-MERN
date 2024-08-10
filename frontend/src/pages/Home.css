@@ -1,0 +1,50 @@
+.home-page {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 90vw;
+}
+
+.welcome-text {
+  margin-top: 50px;
+  text-align: center;
+  min-height: 200px;
+  height: auto;
+  width: 100%;
+  font-size: 80px;
+}
+@media (max-height: 450px) or (max-width: 750px) {
+  .welcome-text {
+    font-size: 40px;
+    min-height: 100px;
+  }
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.image-container img {
+  width: 100px;
+  height: 100px;
+  filter: invert(100%);
+  animation: rotate-image 5s linear infinite;
+}
+
+@keyframes rotate-image {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media (max-height: 450px) or (max-width: 750px) {
+  .image-container img {
+    width: 60px;
+    height: 60px;
+  }
+}
