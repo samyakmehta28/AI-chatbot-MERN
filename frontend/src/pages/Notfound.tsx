@@ -1,4 +1,10 @@
+import { Navigate } from 'react-router-dom';
+
 const Notfound = () => {
-  return <div>Notfound</div>;
+  return (
+    <>
+      <Navigate to="/" />
+    </>
+  );
 };
 export default Notfound;
